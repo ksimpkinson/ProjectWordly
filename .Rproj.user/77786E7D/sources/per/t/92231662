@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1542403066753.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2764823380",
+    "id" : "92231662",
+    "lastKnownWriteTime" : 1542405511,
+    "last_content_update" : 1542405511936,
+    "path" : "~/_Fall_2018/CS450/Assignments/prove09.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "54,0",
+        "scrollLine" : "22",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
