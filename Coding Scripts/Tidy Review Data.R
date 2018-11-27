@@ -1,6 +1,15 @@
 library(tidyverse)
 
-amazon <- read_csv("Data/amazon_cells_labelled.txt", col_names=FALSE)
+
+##########################################
+
+# Clean up raw text files
+
+##########################################
+
+# Amazon Reviews
+
+amazon <- read_csv("Data/amazon_cells_labelled - v2.txt", col_names=FALSE)
 
 amazon <- amazon %>%
   mutate(sentence = case_when(
@@ -8,9 +17,17 @@ amazon <- amazon %>%
     TRUE       ~  str_c(X1, " ", X2))) %>%
   select(-c(X1, X2))
 
+amazon <- amazon %>%
+  mutate(sentence = str_remove_all(sentence, "\\.|,|\\!|\\?"),
+         sentence = tolower(sentence))
+
 write_csv(amazon, path = "Data/amazon.csv")
 
-imdb <- read_csv("Data/imdb_labelled.txt", col_names=FALSE)
+
+# IMDB Reviews
+
+imdb <- read_csv("Data/Raw Data/imdb_labelled - Copy.txt", col_names=FALSE)
+imdb <- read.csv("Data/imdb_labelled - v2.txt", header=FALSE)
 
 imdb <- imdb %>%
   mutate(sentence = case_when(
@@ -33,10 +50,22 @@ imdb <- imdb %>%
     TRUE       ~  str_c(sentence, " ", X6))) %>%
   select(-c(X1, X2, X3, X4, X5, X6))
 
+imdb <- imdb %>%
+  mutate(sentence = str_remove_all(sentence, "\\.|,|\\!|\\?"))
+
 write_csv(imdb, path = "Data/imdb.csv")
     
 
-yelp <- read.delim("yelp_labelled.txt", header=FALSE)
+# Yelp Reviews
+
+yelp <- read.delim("yelp_labelled - v2.txt", header=FALSE)
+
+
+##############################################################
+
+# Combine files
+
+##############################################################
 
 review_data <- bind_rows(amazon, imdb, yelp)
 
