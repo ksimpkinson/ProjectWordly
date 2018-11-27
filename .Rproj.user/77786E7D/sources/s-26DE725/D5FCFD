@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1542414720959.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3467361483",
+    "id" : "D5FCFD",
+    "lastKnownWriteTime" : 1542169941,
+    "last_content_update" : 1542169941,
+    "path" : "~/_Fall_2018/CS450/Semester P/Reduce Data Size.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
