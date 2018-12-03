@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_csv("words_separated_clean.csv")
+dataset = pd.read_csv("../Data/review_data_tidy.csv")
 
 # Used to determing the range for the column and row random selection
 dataset_row_size = np.shape(dataset)[0]
@@ -34,10 +34,10 @@ for row in range(5000):
                      columns=['word_minus_3', 'word_minus_2', 'word_minus_1', 'word', 'next_word'])
     
     # Appending the array
-    dataframe = dataframe.append(array)
+    dataframe = dataframe.append(array, ignore_index=True)
     
 # Changing NA's to ''
 dataframe = dataframe.replace(np.nan, '', regex=True)
 
 # Exporting Dataframe
-dataframe.to_csv("formatted_dataset.csv")
+dataframe.to_csv("../Data/formatted_dataset.csv")
