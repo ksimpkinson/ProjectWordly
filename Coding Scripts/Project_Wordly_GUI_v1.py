@@ -1,4 +1,5 @@
-from tkinter import Tk, scrolledtext, Menu, filedialog, END, messagebox, simpledialog, INSERT
+from tkinter import *
+from tkinter import Tk, scrolledtext, Menu, filedialog, END, messagebox, simpledialog, INSERT, Text
 import tempfile
 
 #create root object
@@ -9,11 +10,11 @@ textArea = scrolledtext.ScrolledText(root, width=50,height=20)
 
 #create temporary file for current text memory storage
 temp = tempfile.TemporaryFile(mode='w+t')
+store = tempfile.TemporaryFile(mode='w+t')
 
 ######################################################
 # MENU BAR FUNCTIONS
 ######################################################
-
 
 def openFile():
     file = filedialog.askopenfile(parent=root, mode='rb', title="Select a File", filetype=(("Text File","*.txt"),("All files","*.")))
@@ -53,8 +54,9 @@ def exitRoot():
         root.destroy()
         
 def about():
-    messagebox.showinfo("About","Project Wordly is a student led project designed to use a neural network to do next word prediction. Other features will be forthcoming.")
-
+    messagebox.showinfo("About","Project Wordly is a student led project " +
+                        "designed to use a neural network to do next word " +
+                        "prediction. Other features will be forthcoming.")
 
 ############################################################
 # MENU BAR SETUP
@@ -83,31 +85,61 @@ menu.add_cascade(label="Help", menu=helpMenu)
 helpMenu.add_command(label="Help")
 helpMenu.add_command(label="About", command=about)
 
+########################################################
+# TEXT PREDICTION
+########################################################
+
+textPrediction = Text(root, height=20, width=30)
+
+textPrediction.insert(INSERT, textArea.get("1.0", "end-1c"))
+
+textPrediction.pack(side=RIGHT)
 
 ########################################################
 # AREA FOR ALGORITHM CALCS
 ########################################################
 
-
-#this method to be used to maybe insert output of next word prediction
-#textArea.insert(INSERT, "hello")
-
-
 #keystroke detection
 def key(event):
     
-    #assigns key to char
+    #assigns char to variable 
     kp = repr(event.char)
-    
-    #writes char to temp file
+
     temp.write(kp)
-    
+
     #starts reading at char index 0
     temp.seek(0)
-    print(temp.read())
+    
+    #print(temp.read())
+    textPrediction.insert(INSERT, textArea.get("1.0", "end-1c"))
+
+def typed_backspace(event):
+    return
+
+def typed_space(event):
+    
+    #detect cursor position
+    pos = textArea.index(INSERT)
+    curr_pos = int(pos.split('.',1)[1])
+    
+    #get text that has already been typed
+    string = textArea.get("1.0", END)
+    
+    #split text into seperate words
+    words = string.split(' ')
+    
+    #write it to a file
+    print(words[-2])
+    
+    #predict next word with words[-2] to words[-3], words[-4], words[-5]
 
 
-#binds the keys type to the open root window
+#detects if a backspace is typed
+root.bind("<BackSpace>", typed_backspace)
+
+root.bind("<space>", typed_space)
+
+#detects if a key is typed
 root.bind("<Key>", key)
 
 #don't know exactly what this does but program won't run without it :)
@@ -119,6 +151,11 @@ root.mainloop()
 
 
 
-# TO DO'S
+### TO DO'S ###
 #need to parse behind cursor after every stroke to identify previous 3 words
 #need to create secondary window to show most likely predictions
+#figure out how to add typed text to NN learning data
+#figure out how to not put backspaces into cache file
+
+### NICE TO HAVES ###
+
