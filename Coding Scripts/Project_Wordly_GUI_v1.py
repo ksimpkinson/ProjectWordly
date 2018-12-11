@@ -6,11 +6,10 @@ import tempfile
 root = Tk(className = " Project Wordly")
 
 #create text area within window
-textArea = scrolledtext.ScrolledText(root, width=50,height=20)
+textArea = Text(root, width=50,height=20)
 
 #create temporary file for current text memory storage
 temp = tempfile.TemporaryFile(mode='w+t')
-store = tempfile.TemporaryFile(mode='w+t')
 
 ######################################################
 # MENU BAR FUNCTIONS
@@ -86,32 +85,18 @@ helpMenu.add_command(label="Help")
 helpMenu.add_command(label="About", command=about)
 
 ########################################################
-# TEXT PREDICTION
+# TEXT PREDICTION AREA
 ########################################################
 
-textPrediction = Text(root, height=20, width=30)
+textPrediction = Text(root, height=10, width=50, background='#EADDDB')
 
 textPrediction.insert(INSERT, textArea.get("1.0", "end-1c"))
 
-textPrediction.pack(side=RIGHT)
+textPrediction.pack(side=BOTTOM)
 
 ########################################################
 # AREA FOR ALGORITHM CALCS
 ########################################################
-
-#keystroke detection
-def key(event):
-    
-    #assigns char to variable 
-    kp = repr(event.char)
-
-    temp.write(kp)
-
-    #starts reading at char index 0
-    temp.seek(0)
-    
-    #print(temp.read())
-    textPrediction.insert(INSERT, textArea.get("1.0", "end-1c"))
 
 def typed_backspace(event):
     return
@@ -128,10 +113,14 @@ def typed_space(event):
     #split text into seperate words
     words = string.split(' ')
     
-    #write it to a file
     print(words[-2])
     
     #predict next word with words[-2] to words[-3], words[-4], words[-5]
+    #do not use words[-1] because the last element in the words list is always a new line
+    
+    ######################
+    #ENTER PREDICTION CODE HERE
+    ######################
 
 
 #detects if a backspace is typed
@@ -139,23 +128,9 @@ root.bind("<BackSpace>", typed_backspace)
 
 root.bind("<space>", typed_space)
 
-#detects if a key is typed
-root.bind("<Key>", key)
-
 #don't know exactly what this does but program won't run without it :)
 textArea.pack()
 
 #keeps window open
 root.mainloop()
-
-
-
-
-### TO DO'S ###
-#need to parse behind cursor after every stroke to identify previous 3 words
-#need to create secondary window to show most likely predictions
-#figure out how to add typed text to NN learning data
-#figure out how to not put backspaces into cache file
-
-### NICE TO HAVES ###
 
