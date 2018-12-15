@@ -113,11 +113,15 @@ def typed_space(event):
     #split text into seperate words
     words = string.split(' ')
     
-    print(words[-2])
+    print(type(words))
     
     #predict next word with words[-2] to words[-3], words[-4], words[-5]
     #do not use words[-1] because the last element in the words list is always a new line
-    
+
+    print(words[-5])
+    print(words[-4])
+    print(words[-3])
+
     ######################
     #ENTER PREDICTION CODE HERE
     ######################
